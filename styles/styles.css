@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Pacifico&display=swap');
+.gloria-hallelujah-regular {
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --color-background: #FDF9F4;
+  --color-nav: #8B5E3C;
+  --color-aside: #F7E6D0;
+  --color-main: #FFFFFF;
+  --color-footer: #4A2E1A;
+  --color-text: #3B2C26;
+  --color-border: #D4B08C;
+  --color-link: #E67E22;
+  --color-link-hover: #D35400;
+  --color-link-hover-contrast: #F7E6D0;
+}
+
+body {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1200px;
+  
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+header{
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--main-nav);
+  color: var(--color-text);
+  text-align: center;
+  padding: 8px;
+  height: 100%;
+}
+header .logo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo h1{
+  color: var(--color-text);
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 24px;
+}
+
+header .opciones-usuario{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--color-text);
+}
+
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  width: 600px;
+}
+.barra-busqueda input[type="text"] {
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  width: 100%;
+}
+.barra-busqueda button {
+  padding: 8px 12px;
+  margin-left: 8px;
+  background-color: var(--color-link);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Barra de navegación */
+nav ul {
+  background-color: var(--color-nav);
+  margin: 0;
+  padding: 8px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+nav a{
+  color: #FFFFFF;
+  
+}
+nav a:hover {
+  color: var(--color-link-hover-contrast);
+  text-decoration: none;
+}
+
+
+/* Barra lateral */
+aside {
+  background-color: var(--color-aside);
+  padding: 1rem;
+  border-right: 2px solid var(--color-border);
+}
+
+/* Contenido principal */
+main {
+  background-color: var(--color-main);
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+/* Pie de página */
+footer {
+  background-color: var(--color-footer);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Párrafos */
+p {
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* Links */
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
