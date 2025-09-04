@@ -81,7 +81,8 @@ nav ul {
   margin: 0;
   padding: 8px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 28px;
   align-items: center;
   list-style: none;
 }
