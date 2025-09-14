@@ -34,6 +34,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
 }
+
+/* Encabezado -------------------------------------------------------------------------------------------------*/
 header{
   display: flex;
   justify-content: space-between;
@@ -85,7 +87,7 @@ header .user-options{
   cursor: pointer;
 }
 
-/* Barra de navegación */
+/* Barra de navegación -----------------------------------------------------------------------------------------------------*/
 nav ul {
   background-color: var(--color-nav);
   margin: 0;
@@ -106,7 +108,7 @@ nav a:hover {
 }
 
 
-/* Banner*/
+/* Banner -------------------------------------------------------------------------------------------------------------------*/
 .banner {
   width: 100%;
   background-color: var(--color-aside);
@@ -119,7 +121,7 @@ nav a:hover {
   
 }
 
-/* Contenido principal */
+/* Contenido principal -----------------------------------------------------------------------------------------------------*/
 main {
   background-color: var(--color-main);
   padding: 8px;
@@ -218,7 +220,7 @@ a:hover {
     }
 
     
-/* Pie de página */
+/* Pie de página  ----------------------------------------------------------------------------------------------------------------- */ 
 footer {
   background-color: var(--color-footer);
   text-align: center;
@@ -248,10 +250,12 @@ footer p {
   text-align: right;
 }
 
-/* tablets */
+/* Responsive Design  ----------------------------------------------------------------------------------------------------------------- */
+
+/* Cel */
 @media (max-width: 768px) {
   .logo h1 {
-      display: none; /* oculta el h1 */
+      display: none;
     }
   .logo img{
     padding-right: 12px;
@@ -266,12 +270,12 @@ footer p {
     flex-direction: column;}
 }
 
-/* escritorio */
+/* Tablet */
 @media (min-width: 769px) and (max-width: 992px) {
-  /* estilos para tablets en vertical */
+  
 }
 
-/* escritorio grande */
+/* Escritorio */
 @media (min-width: 993px) {
-  /* estilos para monitores grandes */
+  
 }
