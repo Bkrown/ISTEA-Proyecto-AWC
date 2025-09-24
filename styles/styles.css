@@ -35,6 +35,12 @@ body {
   color: var(--color-text);
 }
 
+h2{
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 36px;
+  color: var(--color-text);
+}
+
 /* Encabezado -------------------------------------------------------------------------------------------------*/
 header{
   display: flex;
@@ -132,6 +138,7 @@ main {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   min-height: 58vh;
+  margin-top: 4px;
 }
 
 
@@ -267,11 +274,6 @@ footer p {
   
 }
 
-.nosotros h2 {
-  font-size: 30px;
-  margin-bottom: 20px;
-  position: relative;
-}
 
 .nosotros h2::after {
   content: "";
@@ -297,11 +299,6 @@ footer p {
   color: var(--color-text);
 }
 
-.servicios-header h2 {
-  font-size: 30px;
-  margin-bottom: 10px;
-  color: #333;
-}
 
 .servicios-header h2::after {
   content: "";
@@ -366,79 +363,84 @@ footer p {
 /* ====== Sección Contacto ====== */
 
 .contact-container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: var(--color-main);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      form{
-        width: 80%;
-        margin-bottom: 20px;
-        
-        input, textarea{
-          width: 98%; /* Corrijo 2 puntos para alinear al boton*/
-          padding: 10px 5px;
-        }
-      }
+  max-width: 700px;
+  margin: 40px auto;
+  background: var(--color-main);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  form{
+    width: 80%;
+    margin-bottom: 20px;
+    
+    input, textarea{
+      width: 98%; /* Corrijo 2 puntos para alinear al boton*/
+      padding: 10px 5px;
     }
+  }
+}
 
-    .contact-container h2 {
-      text-align: center;
-      color: var(--color-nav);
-      margin-bottom: 30px;
-    }
+.contact-container h2::after {
+content: "";
+display: block;
+width: 60px;
+height: 4px;
+background: #ff914d; 
+margin: 10px auto 0;
+border-radius: 2px;
+}
 
-    .form-group {
-      margin-bottom: 24px;
-    }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
+.form-group {
+  margin-bottom: 24px;
+}
 
-    .form-group input,
-    .form-group textarea {
-      border: 1px solid var(--color-border);
-      border-radius: 5px;
-      font-size: 16px;
-      background: var(--color-aside);
-      color: var(--color-text);
-    }
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
 
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--color-link);
-      box-shadow: 0 0 5px var(--color-link);
-    }
+.form-group input,
+.form-group textarea {
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  font-size: 16px;
+  background: var(--color-aside);
+  color: var(--color-text);
+}
 
-    .form-group textarea {
-      min-height: 120px;
-    }
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-link);
+  box-shadow: 0 0 5px var(--color-link);
+}
 
-    .btn-submit {
-      display: block;
-      width: 100%;
-      background-color: var(--color-link);
-      color: var(--color-main);
-      font-size:18px;
-      padding: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      
-    }
+.form-group textarea {
+  min-height: 120px;
+}
 
-    .btn-submit:hover {
-      background-color: var(--color-link-hover);
-    }
+.btn-submit {
+  display: block;
+  width: 100%;
+  background-color: var(--color-link);
+  color: var(--color-main);
+  font-size:18px;
+  padding: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 40px;
+}
+
+.btn-submit:hover {
+  background-color: var(--color-link-hover);
+}
 
 
 /* Responsive Design  ----------------------------------------------------------------------------------------------------------------- */
