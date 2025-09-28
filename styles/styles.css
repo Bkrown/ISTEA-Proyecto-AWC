@@ -271,9 +271,11 @@ a:hover {
       padding: 16px;
       text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-
       display: flex;
       flex-direction: column;
+      a{
+        text-decoration: none;
+      }
     }
 
     .product-card:hover {
