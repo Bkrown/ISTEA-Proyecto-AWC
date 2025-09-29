@@ -28,7 +28,7 @@ body {
   max-width: 1200px;
  
   display: flex;
-  flex-direction: column;    /* Distribuye header, main, footer en columna */
+  flex-direction: column;  
 
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--color-background);
@@ -541,6 +541,107 @@ border-radius: 2px;
 }
 
 
+/* Detalle producto --------------------------------------------------------------------------------------------------------------------*/
+
+.detalle-producto {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.7fr;
+  gap: 30px;
+  padding: 40px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Columna 1 - Imagen */
+.detalle-img img {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid var(--color-border);
+  background-color: var(--color-main);
+}
+
+/* Columna 2 - Info */
+.detalle-info h1 {
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: var(--color-nav);
+}
+
+.detalle-info .precio {
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--color-link);
+  margin-bottom: 15px;
+}
+
+.detalle-info .descripcion {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.detalle-info .detalle {
+  font-size: 16px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* Columna 3 - Compra */
+.detalle-compra {
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-aside);
+}
+
+.detalle-compra h3 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: var(--color-footer);
+}
+
+.detalle-compra ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.detalle-compra li {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.btn-comprar,
+.btn-carrito {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-comprar {
+  background-color: var(--color-link);
+  color: white;
+}
+
+.btn-comprar:hover {
+  background-color: var(--color-link-hover);
+}
+
+.btn-carrito {
+  background-color: var(--color-footer);
+  color: white;
+}
+
+.btn-carrito:hover {
+  background-color: var(--color-nav);
+}
+
+
 /* Responsive Design  ----------------------------------------------------------------------------------------------------------------- */
 
 /* Cel */
@@ -559,6 +660,12 @@ border-radius: 2px;
     min-width: 100px;
     gap: 16px;
     flex-direction: column;}
+    .detalle-producto {
+    grid-template-columns: 1fr;
+  }
+  .detalle-compra {
+    margin-top: 20px;
+  }
 }
 
 /* Tablet */
