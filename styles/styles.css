@@ -171,6 +171,11 @@ nav a:hover {
     justify-content: space-evenly;
     gap: 5px;
     min-width: 180px;
+    label{
+      display: flex;
+      align-items: center;
+      gap:12px
+    }
 }
 
 .filter-group label {
