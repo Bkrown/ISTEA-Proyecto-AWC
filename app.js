@@ -1,57 +1,65 @@
 document.addEventListener("DOMContentLoaded", function() {
   
-  // data --------------------------------
+  // data ----------------------------------------------------------------
   const listProducts = [
     {
       name: "Product 1",
       price: 10.99,
       img:"./img/productos/juguete 1.webp",
-      description: "Description for Product 1"
+      description: "Description for Product 1",
+      category: "juguetes"
     },
     {
       name: "Product 2",
       price: 15.49,
       img:"./img/productos/juguete 2.webp",
-      description: "Description for Product 2"
+      description: "Description for Product 2",
+      category: "juguetes"
     },
     {
       name: "Product 3",
       price: 7.99,
       img:"./img/productos/juguete 3.webp",
-      description: "Description for Product 3"
+      description: "Description for Product 3",
+      category: "accesorios"
     },
     {
       name: "Product 4",
       price: 12.00,
       img:"./img/productos/juguete 4.webp",
-      description: "Description for Product 4"
+      description: "Description for Product 4",
+      category: "accesorios"
     }, 
     {
       name: "Product 5",
       price: 20.00,
       img:"./img/productos/juguete 5.webp",
-      description: "Description for Product 5"
+      description: "Description for Product 5",
+      category: "alimentos"
     },
     {
       name: "Product 6",
       price: 20.00,
       img:"./img/productos/juguete 5.webp",
-      description: "Description for Product 5"
+      description: "Description for Product 5",
+      category: "alimentos"
     },
     {
       name: "Product 7",
       price: 20.00,
       img:"./img/productos/juguete 5.webp",
-      description: "Description for Product 5"
+      description: "Description for Product 5",
+      category: "alimentos"
     }
   ]
 
-  // DOM elements ----------------
+  // DOM elements ------------------------------------------------
   const productsDomElements = document.querySelector('.product-grid'); // Elemento padre
   const inputSearch = document.getElementById('input-search-product');
+  const categorySelect = document.getElementById('category');
 
 
-  // funciones ----------------
+  // funciones ------------------------------------------------
   function createProduct(product) {
     
     const newProduct = document.createElement('div');
@@ -60,21 +68,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const newAnchor = document.createElement('a');
     newAnchor.setAttribute('href', './detalle-producto.html');
     
-        const newImg = document.createElement('img');
-        newImg.setAttribute('src', product.img);
-        newImg.setAttribute('alt', product.name);
-
-        
-        const newPName = document.createElement('h3');
-        newPName.setAttribute('class', 'product-name');
-        newPName.innerText = product.name;
-        
+    const newImg = document.createElement('img');
+    newImg.setAttribute('src', product.img);
+    newImg.setAttribute('alt', product.name);
+    
+    const newPName = document.createElement('h3');
+    newPName.setAttribute('class', 'product-name');
+    newPName.innerText = product.name;        
         
     const newFooterProduct = document.createElement('div');
     newFooterProduct.setAttribute('class', 'product-footer');
 
     const newPPrice = document.createElement('p');
-    //newPPrice.setAttribute('class', 'product-price');
     newPPrice.innerText = `$${product.price}`;   
 
     const newAddToCartLink = document.createElement('a');
@@ -82,22 +87,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const newButton = document.createElement('button');
     newButton.innerText = 'Agregar al carrito';
+    newButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      console.log(`Producto "${product.name}" agregado al carrito.`);
+    });
 
-    /* 
-    newDiv.appendChild(newImg);
-    newDiv.appendChild(newPName);
-    newDiv.appendChild(newFooterProduct);
-    newDiv.appendChild(newPPrice);
-    newAnchor.appendChild(newDiv);
-    newProduct.appendChild(newAnchor);
-    */
-
-    // Armar estructura del footer
+    
+    // Estructura del footer
     newAddToCartLink.appendChild(newButton);
     newFooterProduct.appendChild(newPPrice);
     newFooterProduct.appendChild(newAddToCartLink);
 
-    // Armar estructura del producto
+    // Estructura del producto
     newAnchor.appendChild(newImg);
     newAnchor.appendChild(newPName);
     newAnchor.appendChild(newFooterProduct);
@@ -121,14 +122,34 @@ document.addEventListener("DOMContentLoaded", function() {
       const newProduct = createProduct(product);
       productsDomElements.appendChild(newProduct);
     })};
-
-  // Events ----------------
+    
+  function filterProductsByCategory(category) {
+    return listProducts.filter(p => p.category.toLowerCase() === category);
+  }
+    
+  
+  // Events ------------------------------------------------
+  
+  // Filtro por nombre
   inputSearch.addEventListener('keyup', (event) => {
     
     const text = event.target.value;
     const productsFiltered = filterProducts(text);
     renderProducts(productsFiltered);
   });
+
+  // Filtro por categoria
+  categorySelect.addEventListener('change', (event) => {
+    const category = event.target.value.toLowerCase(); 
+    
+    if (category === 'todos') {
+      renderProducts(listProducts);
+    } else {
+      const productsFiltered = filterProductsByCategory(category);
+      renderProducts(productsFiltered);
+    }
+  });
+
 
   //Inicializar render
   renderProducts(listProducts);
