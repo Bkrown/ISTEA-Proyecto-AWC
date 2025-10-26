@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-
+  
+  // data --------------------------------
   const listProducts = [
     {
       name: "Product 1",
@@ -30,24 +31,109 @@ document.addEventListener("DOMContentLoaded", function() {
       price: 20.00,
       img:"./img/productos/juguete 5.webp",
       description: "Description for Product 5"
+    },
+    {
+      name: "Product 6",
+      price: 20.00,
+      img:"./img/productos/juguete 5.webp",
+      description: "Description for Product 5"
+    },
+    {
+      name: "Product 7",
+      price: 20.00,
+      img:"./img/productos/juguete 5.webp",
+      description: "Description for Product 5"
     }
   ]
 
-  const products = document.querySelector('.product-container');
+  // DOM elements ----------------
+  const productsDomElements = document.querySelector('.product-grid'); // Elemento padre
+  const inputSearch = document.getElementById('input-search-product');
 
-  functioncreateProduct(product) {
+
+  // funciones ----------------
+  function createProduct(product) {
     
-    const NewProduct = document.createElement('div');
-    NewProduct.setAttribute('class', 'product-item');
+    const newProduct = document.createElement('div');
+    newProduct.setAttribute('class', 'product-card');
 
-    const NewAnchor = document.createElement('a');
-    NewAnchor.setAttribute('href', './product-detail.html');
+    const newAnchor = document.createElement('a');
+    newAnchor.setAttribute('href', './detalle-producto.html');
+    
+        const newImg = document.createElement('img');
+        newImg.setAttribute('src', product.img);
+        newImg.setAttribute('alt', product.name);
 
-    const newDiv = document.createElement('div');
-    newDiv.setAttribute('class', 'fondo-rojo');
+        
+        const newPName = document.createElement('h3');
+        newPName.setAttribute('class', 'product-name');
+        newPName.innerText = product.name;
+        
+        
+    const newFooterProduct = document.createElement('div');
+    newFooterProduct.setAttribute('class', 'product-footer');
 
-    const newImg = document.createElement('img');
-    newImg.setAttribute('src', "./img/productos/juguete 1.webp");
-    newImg.setAttribute('alt', product.name);
-    newProduct.appendChild(NewAnchor);
+    const newPPrice = document.createElement('p');
+    //newPPrice.setAttribute('class', 'product-price');
+    newPPrice.innerText = `$${product.price}`;   
+
+    const newAddToCartLink = document.createElement('a');
+    newAddToCartLink.setAttribute('href', '#');
+
+    const newButton = document.createElement('button');
+    newButton.innerText = 'Agregar al carrito';
+
+    /* 
+    newDiv.appendChild(newImg);
+    newDiv.appendChild(newPName);
+    newDiv.appendChild(newFooterProduct);
+    newDiv.appendChild(newPPrice);
+    newAnchor.appendChild(newDiv);
+    newProduct.appendChild(newAnchor);
+    */
+
+    // Armar estructura del footer
+    newAddToCartLink.appendChild(newButton);
+    newFooterProduct.appendChild(newPPrice);
+    newFooterProduct.appendChild(newAddToCartLink);
+
+    // Armar estructura del producto
+    newAnchor.appendChild(newImg);
+    newAnchor.appendChild(newPName);
+    newAnchor.appendChild(newFooterProduct);
+
+    newProduct.appendChild(newAnchor);
+    return newProduct;
+
+  }
+
+  function filterProducts(text) {
+    // Filtro de productos
+    const productFiltered = listProducts.filter(product => 
+      product.name.toLowerCase().includes(text.toLowerCase())
+    );
+    return productFiltered;
+  }
+
+  function renderProducts(products) {
+    productsDomElements.innerHTML = '';
+    products.forEach(product => {
+      const newProduct = createProduct(product);
+      productsDomElements.appendChild(newProduct);
+    })};
+
+  // Events ----------------
+  inputSearch.addEventListener('keyup', (event) => {
+    
+    const text = event.target.value;
+    const productsFiltered = filterProducts(text);
+    renderProducts(productsFiltered);
+  });
+
+  //Inicializar render
+  renderProducts(listProducts);
+
+
+
+
 })
