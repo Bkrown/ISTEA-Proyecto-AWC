@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const categorySelect = document.getElementById('category');
   
   // Airtable API ------------------------------------------------
-  const airtableToken = "patl7kTQUOmgS72Qx.aefe32b457017f298c0371f2f60f54405df87d845c107700362db3271a02e5b6";
+  const airtableToken = "";//Borrado para pushear a GitHub
   const baseId = "appH0zQj2QXP3U1fC";
   const tableName = "Productos";
   const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
@@ -121,6 +121,9 @@ document.addEventListener("DOMContentLoaded", function() {
     );
     return productFiltered;
   }
+  function filterProductsByCategory(category) {
+    return listProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
+  }
 
   function renderProducts(products) {
     productsDomElements.innerHTML = '';
@@ -129,9 +132,6 @@ document.addEventListener("DOMContentLoaded", function() {
       productsDomElements.appendChild(newProduct);
     })};
     
-  function filterProductsByCategory(category) {
-    return listProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
-  }
     
   
   // Events ------------------------------------------------
