@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   
   // data ----------------------------------------------------------------
+  /* 
   const listProducts = [
     {
       name: "Product 1",
@@ -52,12 +53,17 @@ document.addEventListener("DOMContentLoaded", function() {
       category: "alimentos"
     }
   ]
-
+ */
   // DOM elements ------------------------------------------------
   const productsDomElements = document.querySelector('.product-grid'); // Elemento padre
   const inputSearch = document.getElementById('input-search-product');
   const categorySelect = document.getElementById('category');
-
+  
+  // Airtable API ------------------------------------------------
+  const airtableToken = "patl7kTQUOmgS72Qx.aefe32b457017f298c0371f2f60f54405df87d845c107700362db3271a02e5b6";
+  const baseId = "appH0zQj2QXP3U1fC";
+  const tableName = "Productos";
+  const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
   // funciones ------------------------------------------------
   function createProduct(product) {
@@ -124,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })};
     
   function filterProductsByCategory(category) {
-    return listProducts.filter(p => p.category.toLowerCase() === category);
+    return listProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
   }
     
   
@@ -153,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //Inicializar render
   //renderProducts(listProducts);
-
+/* 
   async function getProductsFromApi() {
     try {
       const response = await fetch('https://dummyjson.com/products/category/sunglasses');
@@ -175,5 +181,68 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   getProductsFromApi();
+ */
+
+
+  
+
+  async function getProductsFromAirtable() {
+    try {
+      const response = await fetch(airtableUrl, {
+        headers: {
+          Authorization: `Bearer ${airtableToken}`,
+          'Content-Type': 'application/json'
+        }
+      }); 
+      const data = await response.json();
+      console.log('Productos desde Airtable:', data);
+      const mappedProducts = data.records.map(items => ({
+        name: items.fields.Name,
+        price: items.fields.Price,
+        img: items.fields.Img,
+        description: items.fields.Description,
+        category: items.fields.Category
+      }))
+      listProducts = mappedProducts;
+      console.log('Productos mapeados:', mappedProducts);
+      renderProducts(mappedProducts);
+      }catch (error) {
+      console.error('Error al obtener los productos desde Airtable:', error);
+    }
+  };
+  getProductsFromAirtable();
+
+  async function editAirtableProduct(product){
+    try {
+      const response = await fetch(`${airtableUrl}/recBHVaoBTakEPqg1`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${airtableToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fields: {Name: product.name, 
+            Price: product.price, 
+            Category: product.category, 
+            Img: product.img, 
+            Description: product.description
+          }
+        })
+      });
+      const data = await response.json();
+      console.log('Producto editado en Airtable:', data);
+    } catch (error) {
+      console.error('Error al editar el producto en Airtable:', error);
+    }
+            
+  }
+
+ /*  editAirtableProduct({
+    name: "Producto Editado",
+    price: 99.99,
+    img: "https://example.com/edited-product.jpg",
+    description: "Descripción del producto editado",
+    category: "juguetes"
+  }); */
 
 });
