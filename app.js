@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // funciones ------------------------------------------------
   function createProduct(product) {
-    
+    console.log('Creando producto:', product);
     const newProduct = document.createElement('div');
     newProduct.setAttribute('class', 'product-card');
 
@@ -130,18 +130,18 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // Events ------------------------------------------------
   
-  // Filtro por nombre
+  
   inputSearch.addEventListener('keyup', (event) => {
-    
+    // Filtro por nombre
     const text = event.target.value;
     const productsFiltered = filterProducts(text);
     renderProducts(productsFiltered);
   });
 
-  // Filtro por categoria
+  
   categorySelect.addEventListener('change', (event) => {
     const category = event.target.value.toLowerCase(); 
-    
+    // Filtro por categoria
     if (category === 'todos') {
       renderProducts(listProducts);
     } else {
@@ -152,9 +152,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
   //Inicializar render
-  renderProducts(listProducts);
+  //renderProducts(listProducts);
 
+  async function getProductsFromApi() {
+    try {
+      const response = await fetch('https://dummyjson.com/products/category/sunglasses');
+      const data = await response.json();
+      console.log('Productos desde API:', data);
+      const mappedProducts = data.products.map(product => ({
+        name: product.title,
+        price: product.price,
+        img: product.images[0],
+        description: product.description,
+        category: product.category
+      }))
+      console.log('Productos mapeados:', mappedProducts);
+      //imprimir productos
+      renderProducts(mappedProducts);
+    }catch (error) {
+      console.error('Error al obtener los productos desde la API:', error);
+    } 
+  };
 
+  getProductsFromApi();
 
-
-})
+});
