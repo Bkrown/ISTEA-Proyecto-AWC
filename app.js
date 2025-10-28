@@ -1,3 +1,5 @@
+import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
+
 document.addEventListener("DOMContentLoaded", function() {
   
   // data ----------------------------------------------------------------
@@ -60,9 +62,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const categorySelect = document.getElementById('category');
   
   // Airtable API ------------------------------------------------
-  const airtableToken = "";//Borrado para pushear a GitHub
-  const baseId = "appH0zQj2QXP3U1fC";
-  const tableName = "Productos";
+  const airtableToken = AIRTABLE_TOKEN;//Borrado para pushear a GitHub
+  const baseId = BASE_ID;
+  const tableName = TABLE_NAME;
   const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
   // funciones ------------------------------------------------
