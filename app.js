@@ -45,7 +45,9 @@ document.addEventListener("DOMContentLoaded", function() {
     newButton.innerText = 'Agregar al carrito';
     newButton.addEventListener('click', (event) => {
       event.preventDefault();
-      console.log(`Producto "${product.name}" agregado al carrito.`);
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
     });
 
     
