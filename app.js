@@ -3,59 +3,7 @@ import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
 document.addEventListener("DOMContentLoaded", function() {
   
   // data ----------------------------------------------------------------
-  /* 
-  const listProducts = [
-    {
-      name: "Product 1",
-      price: 10.99,
-      img:"./img/productos/juguete 1.webp",
-      description: "Description for Product 1",
-      category: "juguetes"
-    },
-    {
-      name: "Product 2",
-      price: 15.49,
-      img:"./img/productos/juguete 2.webp",
-      description: "Description for Product 2",
-      category: "juguetes"
-    },
-    {
-      name: "Product 3",
-      price: 7.99,
-      img:"./img/productos/juguete 3.webp",
-      description: "Description for Product 3",
-      category: "accesorios"
-    },
-    {
-      name: "Product 4",
-      price: 12.00,
-      img:"./img/productos/juguete 4.webp",
-      description: "Description for Product 4",
-      category: "accesorios"
-    }, 
-    {
-      name: "Product 5",
-      price: 20.00,
-      img:"./img/productos/juguete 5.webp",
-      description: "Description for Product 5",
-      category: "alimentos"
-    },
-    {
-      name: "Product 6",
-      price: 20.00,
-      img:"./img/productos/juguete 5.webp",
-      description: "Description for Product 5",
-      category: "alimentos"
-    },
-    {
-      name: "Product 7",
-      price: 20.00,
-      img:"./img/productos/juguete 5.webp",
-      description: "Description for Product 5",
-      category: "alimentos"
-    }
-  ]
- */
+  let listProducts = []
   // DOM elements ------------------------------------------------
   const productsDomElements = document.querySelector('.product-grid'); // Elemento padre
   const inputSearch = document.getElementById('input-search-product');
