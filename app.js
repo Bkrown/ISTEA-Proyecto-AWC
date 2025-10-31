@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     newProduct.setAttribute('class', 'product-card');
 
     const newAnchor = document.createElement('a');
-    newAnchor.setAttribute('href', './detalle-producto.html');
+    newAnchor.setAttribute('href', './detalle-producto.html?id=' + encodeURIComponent(product.id));
     
     const newImg = document.createElement('img');
     newImg.setAttribute('src', product.img);
@@ -109,34 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 
-  //Inicializar render
-  //renderProducts(listProducts);
-/* 
-  async function getProductsFromApi() {
-    try {
-      const response = await fetch('https://dummyjson.com/products/category/sunglasses');
-      const data = await response.json();
-      console.log('Productos desde API:', data);
-      const mappedProducts = data.products.map(product => ({
-        name: product.title,
-        price: product.price,
-        img: product.images[0],
-        description: product.description,
-        category: product.category
-      }))
-      console.log('Productos mapeados:', mappedProducts);
-      //imprimir productos
-      renderProducts(mappedProducts);
-    }catch (error) {
-      console.error('Error al obtener los productos desde la API:', error);
-    } 
-  };
-
-  getProductsFromApi();
- */
-
-
-  
+  // Airtable API calls ------------------------------------------------
 
   async function getProductsFromAirtable() {
     try {
@@ -149,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
       const data = await response.json();
       console.log('Productos desde Airtable:', data);
       const mappedProducts = data.records.map(items => ({
+        id: items.id,
         name: items.fields.Name,
         price: items.fields.Price,
         img: items.fields.Img,
