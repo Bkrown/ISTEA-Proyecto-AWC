@@ -73,9 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
     );
     return productFiltered;
   }
-  function filterProductsByCategory(category) {
-    return listProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
-  }
 
   function renderProducts(products) {
     productsDomElements.innerHTML = '';
