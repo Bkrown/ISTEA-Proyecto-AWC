@@ -97,16 +97,26 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   
-  categorySelect.addEventListener('change', (event) => {
-    const category = event.target.value.toLowerCase(); 
-    // Filtro por categoria
-    if (category === 'todos') {
+const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+
+categoryCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value.toLowerCase());
+
+    if (selectedCategories.length === 0) {
       renderProducts(listProducts);
+      console.log('No hay categorías seleccionadas, mostrando todos los productos.');
     } else {
-      const productsFiltered = filterProductsByCategory(category);
+      const productsFiltered = listProducts.filter(p => selectedCategories.includes(p.category));
       renderProducts(productsFiltered);
+      console.log('Categorías en Airtable:', listProducts.map(p => p.category));
+      console.log('Categorías seleccionadas:', selectedCategories);
+      console.log('Productos filtrados por categoría:', productsFiltered);
     }
   });
+});
 
 
   // Airtable API calls ------------------------------------------------
