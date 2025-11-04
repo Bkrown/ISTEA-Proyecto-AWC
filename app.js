@@ -48,6 +48,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       cart.push(product);
       localStorage.setItem('cart', JSON.stringify(cart));
+      const toast = document.getElementById('toast-carrito');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
     });
 
     
