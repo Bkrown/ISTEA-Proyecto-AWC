@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   const cartContainer = document.getElementById("cart-items");
   const summaryTotal = document.querySelector(".cart-summary span:last-child");

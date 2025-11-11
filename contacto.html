@@ -18,8 +18,8 @@
             <button>Buscar</button> 
         </div>
         <div class="user-options">
-            <a href="#">Ingresar</a>
-            <a href="carrito.html"><img src="img/carrito.png" alt="Carrito" width="40px"></a>
+            <a href="login.html">Ingresar</a>
+            <a href="carrito.html" id="cart-icon"></a>
         </div>
     </header>
     <nav>
@@ -34,7 +34,7 @@
     <main>
         <div class="contact-container">
             <h2>Contacto</h2>
-            <form action="#" method="post">
+            <form id="contact-form">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" required>
@@ -51,7 +51,7 @@
                     <label for="mensaje">Mensaje</label>
                     <textarea id="mensaje" name="mensaje" required></textarea>
                 </div>
-                <button type="submit" class="btn-submit">Enviar</but>
+                <button type="submit" class="btn-submit">Enviar</button>
             </form>
         </div>
          
@@ -78,5 +78,6 @@
     </footer>
     
 </body>
-<script src="./app.js"></script>
+<script src="./funComunes.js" type="module"></script>
+<script src="./contacto.js" type="module"></script>
 </html>

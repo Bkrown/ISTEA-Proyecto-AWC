@@ -535,6 +535,48 @@ border-radius: 2px;
 .btn-submit:hover {
   background-color: var(--color-link-hover);
 }
+/* Pagina gracias por contactarse -------------------------------------------------------------------------*/
+.registro-exitoso {
+  max-width: 500px;
+  margin: 80px auto;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 50px 30px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.registro-exitoso h2 {
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 1.8rem;
+  color: var(--color-nav);
+  margin-bottom: 15px;
+}
+
+.registro-exitoso p {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.btn-volver {
+  display: inline-block;
+  background-color: var(--color-link);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+  background-color: var(--color-link-hover);
+  transform: scale(1.05);
+}
 
 
 /* Detalle producto --------------------------------------------------------------------------------------------------------------------*/
@@ -903,8 +945,8 @@ border-radius: 2px;
 .dropdown.show .dropdown-content {
   display: block;
   width: 80px;
-  background-color: var(--color-link);
-  color: white;
+  background-color: var(--color-link-hover-contrast);
+  color: black;
 }
 
 /* Login --------------------------------------------------------------------------------------------------- */

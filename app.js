@@ -1,4 +1,5 @@
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
+import { updateCartCount } from './funComunes.js';
 //import { ICON_CHECH } from './icons.js';
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -9,19 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const productsDomElements = document.querySelector('.product-grid'); // Elemento padre
   const inputSearch = document.getElementById('input-search-product');
   const categorySelect = document.getElementById('category');
-  const cartIcon = document.getElementById('cart-icon');
+  
 
-  cartIcon.innerHTML = '<img src="img/carrito.png" alt="Carrito" width="40px"><span id="cart-count">0</span>';
-
-  function updateCartCount(){
-  const cartItemsCount = JSON.parse(localStorage.getItem('cart')) ?.length || 0;
-
-  if (cartItemsCount > 0){
-    const cartCountSpan = document.getElementById('cart-count');
-    cartCountSpan.innerHTML = cartItemsCount;
-  }
-
-  }
+  
   
   // Airtable API ------------------------------------------------
   const airtableToken = AIRTABLE_TOKEN;//Borrado para pushear a GitHub
