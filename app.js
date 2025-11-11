@@ -87,7 +87,27 @@ document.addEventListener("DOMContentLoaded", function() {
       productsDomElements.appendChild(newProduct);
     })};
     
+  // abrir/cerrar menú Categorías
+  document.querySelector('.dropdown-btn').addEventListener('click', function() {
+  this.parentElement.classList.toggle('show');
+  });
+
+  // cerrar si se hace clic afuera
+  window.addEventListener('click', function(e) {
+  if (!e.target.matches('.dropdown-btn')) {
+    document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
+    }
+  });
+
+  // detectar selección de filtros
+  document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const seleccionadas = Array.from(document.querySelectorAll('.category-checkbox:checked'))
+                               .map(cb => cb.value);
+    console.log("Categorías seleccionadas:", seleccionadas);
     
+    });
+  });
   
   // Events ------------------------------------------------
   
@@ -176,12 +196,6 @@ categoryCheckboxes.forEach(checkbox => {
             
   }
 
- /*  editAirtableProduct({
-    name: "Producto Editado",
-    price: 99.99,
-    img: "https://example.com/edited-product.jpg",
-    description: "Descripción del producto editado",
-    category: "juguetes"
-  }); */
+ 
 
 });

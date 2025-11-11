@@ -35,22 +35,31 @@
       <div><img src="img/Banner-20-off.webp" alt="Banner" ></div>      
 
     </section>
-    <section class="filters">
+
+  <section class="filters">
+  <form>
+    <div class="dropdown">
+      <button type="button" class="dropdown-btn">Categorías ▼</button>
+      <div class="dropdown-content">
+        <label><input type="checkbox" value="juguete" class="category-checkbox"> Juguetes</label>
+        <label><input type="checkbox" value="accesorio" class="category-checkbox"> Accesorios</label>
+        <label><input type="checkbox" value="alimento" class="category-checkbox"> Alimentos</label>
+      </div>
+    </div>
+  </form>
+</section>
+
+<!--    <section class="filters">
         <form>
-            <!-- Filtro por categoría -->
+            
             <div class="filter-group">
                 <label><input type="checkbox" value="juguete" class="category-checkbox"> Juguetes</label>
                 <label><input type="checkbox" value="accesorio" class="category-checkbox"> Accesorios</label>
                 <label><input type="checkbox" value="alimento" class="category-checkbox"> Alimentos</label>
             </div>
-
-            <!-- Filtro por precio -->
-            <div class="filter-group">
-                <label for="price">Precio máximo:</label>
-                <input type="number" id="price" name="price" placeholder="Ej: 3000">
-            </div>            
+          
         </form>
-    </section>
+    </section>-->
     <main>
         <!-- JS Los productos se agregan dinamicamente desde JS -->
         <section class="product-grid">      

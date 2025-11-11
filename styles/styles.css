@@ -136,16 +136,7 @@ nav a:hover {
 /* Filtros -----------------------------------------------------------------------------------------------------------------*/
 
 .filters {
-    background: var(--color-aside);
-    margin: 8px auto;
-    border: 2px solid var(--color-border);
-    border-radius: 12px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 0;
-    
+ 
 }
 
 .filters h2 {
@@ -161,7 +152,7 @@ nav a:hover {
     flex-wrap: wrap;
     gap: 55px;
     align-items: center;
-    justify-content: center;
+    justify-content: end;
 }
 
 .filter-group {
@@ -816,6 +807,38 @@ border-radius: 2px;
   100% {opacity: 0;}
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-btn {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  min-width: 80%;
+  z-index: 1;
+  border-radius: 5px;
+  padding: 10px;
+}
+.dropdown-content label {
+  display: block;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.dropdown.show .dropdown-content {
+  display: block;
+  width: 80px;
+  background-color: var(--color-link);
+  color: white;
+}
 
 /* Responsive Design  ----------------------------------------------------------------------------------------------------------------- */
 
