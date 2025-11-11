@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Events ------------------------------------------------
   
   
+  
   inputSearch.addEventListener('keyup', (event) => {
     // Filtro por nombre
     const text = event.target.value;
