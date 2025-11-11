@@ -75,7 +75,7 @@ async function saveProduct(e) {
       body: JSON.stringify(producto),
     });
 
-    alert("Producto guardado correctamente ✅");
+    alert("Producto guardado correctamente ");
     document.getElementById("product-form").reset();
     document.getElementById("product-id").value = "";
     getProductsFromAirtable();
