@@ -637,6 +637,10 @@ border-radius: 2px;
   background-color: var(--color-nav);
 }
 /* Carrito -----------------------------------------------------------------------------------------------------------------------------*/
+#cart-count{
+  position: absolute;
+  
+}
 
 .cart-container {
   display: grid;
