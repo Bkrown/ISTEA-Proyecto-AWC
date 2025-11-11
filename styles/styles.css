@@ -800,6 +800,68 @@ border-radius: 2px;
   opacity: 0.8;
 }
 
+/* Modal de Servicios --------------------------------------------------------------------------- */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--color-main);
+  margin: auto;
+  padding: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: aparecerModal 0.3s ease;
+}
+
+@keyframes aparecerModal {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content h2 {
+  font-family: "Gloria Hallelujah", cursive;
+  color: var(--color-nav);
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.modal-img {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+.close:hover {
+  color: white;
+}
+
 @keyframes aparecer {
   0% {opacity: 0;}
   100% {opacity: 0.8;}
