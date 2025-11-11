@@ -74,11 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Cerrar modal
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
   // Cerrar al hacer clic fuera del contenido
   window.addEventListener("click", (e) => {
     if (e.target === modal) {
