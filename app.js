@@ -1,5 +1,5 @@
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
-import { ICON_CHECH } from './icons.js';
+//import { ICON_CHECH } from './icons.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   
@@ -59,10 +59,29 @@ document.addEventListener("DOMContentLoaded", function() {
     newButton.innerText = 'Agregar al carrito';
     newButton.addEventListener('click', (event) => {
       event.preventDefault();
+
+      // Obtener carrito actual o crear uno vacío
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(product);
+
+      // Ver si el producto ya está en el carrito
+      const existingProduct = cart.find(item => item.id === product.id);
+
+      if (existingProduct) {
+        // Si ya existe, aumentar la cantidad
+        existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+      } else {
+        // Si no existe, agregarlo con cantidad = 1
+        product.quantity = 1;
+        cart.push(product);
+      }
+
+      // Guardar carrito actualizado
       localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Actualizar contador visual del carrito (si lo tenés)
       updateCartCount();
+
+      // Mostrar el toast
       const toast = document.getElementById('toast-carrito');
       toast.style.display = 'block';
       setTimeout(() => {
@@ -156,6 +175,9 @@ categoryCheckboxes.forEach(checkbox => {
   });
 });
 
+  // Carrito ----------------------------------------------------------------------
+
+  
 
   // Airtable API calls ------------------------------------------------
 
