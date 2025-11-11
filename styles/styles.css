@@ -1155,6 +1155,148 @@ border-radius: 2px;
   text-decoration: none;
 }
 
+/* Admin CRUD --------------------------------------------------------------------------------------------------- */
+.admin-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.admin-container h2 {
+  font-family: "Gloria Hallelujah", cursive;
+  color: var(--color-nav);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.product-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.product-form textarea {
+  grid-column: 1;
+  min-height: 40px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid var(--color-border);
+  padding: 10px;
+  text-align: center;
+}
+
+.product-table th {
+  background-color: var(--color-aside);
+}
+
+.product-table img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.action-btn {
+  padding: 6px 10px;
+  margin: 2px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.action-btn.edit {
+  background-color: var(--color-link);
+}
+.action-btn.delete {
+  background-color: var(--color-footer);
+}
+
+/* Modal CRUD Agregar Producto ---------------------------------------------------------------------------------- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 25px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  animation: modalOpen 0.3s ease-out;
+}
+
+@keyframes modalOpen {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: red;
+}
+
+.btn-open {
+  background-color: var(--color-link);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.btn-open:hover {
+  background-color: var(--color-link-hover);
+}
+
+.btn-submit-modal{
+  width: 150px;
+  height: 50px;
+  align-self: center;
+  justify-self: center;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--color-link);
+  color: white;
+  
+
+}
+#modal-title{
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 1.8rem;
+  color: var(--color-nav);
+  margin-bottom: 40px;
+}
+
 /* Responsive Design  ----------------------------------------------------------------------------------------------------------------- */
 
 /* Cel */
