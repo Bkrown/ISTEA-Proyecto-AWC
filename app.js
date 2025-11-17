@@ -137,11 +137,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
   
   
-  inputSearch.addEventListener('keyup', (event) => {
-    // Filtro por nombre
-    const text = event.target.value;
-    const productsFiltered = filterProducts(text);
-    renderProducts(productsFiltered);
+  inputSearch.addEventListener('keyup', () => {
+    applyFilters();
   });
 
   
@@ -149,26 +146,37 @@ const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
 
 categoryCheckboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
-    const selectedCategories = Array.from(categoryCheckboxes)
-      .filter(cb => cb.checked)
-      .map(cb => cb.value.toLowerCase());
-
-    if (selectedCategories.length === 0) {
-      renderProducts(listProducts);
-      console.log('No hay categorías seleccionadas, mostrando todos los productos.');
-    } else {
-      const productsFiltered = listProducts.filter(p => selectedCategories.includes(p.category));
-      renderProducts(productsFiltered);
-      console.log('Categorías en Airtable:', listProducts.map(p => p.category));
-      console.log('Categorías seleccionadas:', selectedCategories);
-      console.log('Productos filtrados por categoría:', productsFiltered);
-    }
+    checkbox.addEventListener('change', () => {
+    applyFilters();
+  });
   });
 });
+    function applyFilters() {
 
-  // Carrito ----------------------------------------------------------------------
+      const text = inputSearch.value.toLowerCase();
 
-  
+      const selectedCategories = Array.from(categoryCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value.toLowerCase());
+
+      let filtered = listProducts;
+
+      // Filtrar por categoría si hay seleccionadas
+      if (selectedCategories.length > 0) {
+        filtered = filtered.filter(p =>
+          selectedCategories.includes(p.category?.toLowerCase())
+        );
+      }
+
+      // Filtrar por texto
+      if (text.trim() !== "") {
+        filtered = filtered.filter(p =>
+          p.name.toLowerCase().includes(text)
+        );
+      }
+
+      renderProducts(filtered);
+    }
 
   // Airtable API calls ------------------------------------------------
 
