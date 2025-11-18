@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function createProduct(product) {
-    console.log('Creando producto:', product);
+    
     const newProduct = document.createElement('div');
     newProduct.setAttribute('class', 'product-card');
 
@@ -167,8 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
   checkbox.addEventListener('change', () => {
     const seleccionadas = Array.from(document.querySelectorAll('.category-checkbox:checked'))
                                .map(cb => cb.value);
-    console.log("Categorías seleccionadas:", seleccionadas);
-    
+       
     });
   });
   
@@ -228,7 +227,7 @@ categoryCheckboxes.forEach(checkbox => {
         }
       }); 
       const data = await response.json();
-      console.log('Productos desde Airtable:', data);
+      
       const mappedProducts = data.records.map(items => ({
         id: items.id,
         name: items.fields.Name,
@@ -238,7 +237,7 @@ categoryCheckboxes.forEach(checkbox => {
         category: items.fields.Category
       }))
       listProducts = mappedProducts;
-      console.log('Productos mapeados:', mappedProducts);
+      
       renderProducts(mappedProducts);
       }catch (error) {
       console.error('Error al obtener los productos desde Airtable:', error);
@@ -265,7 +264,7 @@ categoryCheckboxes.forEach(checkbox => {
         })
       });
       const data = await response.json();
-      console.log('Producto editado en Airtable:', data);
+      
     } catch (error) {
       console.error('Error al editar el producto en Airtable:', error);
     }
