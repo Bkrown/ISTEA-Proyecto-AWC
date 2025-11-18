@@ -27,6 +27,28 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  async function getStockFromAirtable(productId) {
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${productId}`;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) return null;
+
+      const data = await response.json();
+      return data.fields.Stock ?? null;
+
+    } catch (error) {
+      console.error("Error obteniendo stock:", error);
+      return null;
+    }
+  }
+
   function renderProduct(fields, productId) {
     // Obtener elementos del DOM
     const img = document.querySelector('.product-image');
@@ -58,30 +80,43 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     // Evento: Agregar al carrito
-    btnCarrito.addEventListener("click", (event) => {
+    btnCarrito.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      // Obtener carrito actual o crear uno vacío
+      // Obtener stock real desde Airtable
+      const stockReal = await getStockFromAirtable(product.id);
+
+      if (stockReal === null) {
+        alert("No se pudo verificar el stock. Intente más tarde.");
+        return;
+      }
+
+      // Obtener carrito actual
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
       // Buscar si ya está en el carrito
       const existingProduct = cart.find(item => item.id === product.id);
 
+      const cantidadActual = existingProduct ? existingProduct.quantity : 0;
+      const cantidadNueva = cantidadActual + 1;
+
+      // Comparar con stock
+      if (cantidadNueva > stockReal) {
+        showToastSinStock("No hay suficiente Stock")
+        return; 
+      }
+
+      // Agregar normalmente
       if (existingProduct) {
-        existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+        existingProduct.quantity = cantidadNueva;
       } else {
         product.quantity = 1;
         cart.push(product);
       }
 
-      // Guardar carrito actualizado
       localStorage.setItem('cart', JSON.stringify(cart));
-
-      // Actualizar contador si existe
       updateCartCount();
-
-      // Mostrar toast (mensaje emergente)
-      showToast("Producto agregado al carrito ");
+      showToast("Producto agregado al carrito");
     });
   }
 
@@ -91,6 +126,19 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'toast-carrito';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+    }
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
+  function showToastSinStock(message) {
+    let toast = document.getElementById('toast-carrito-sin-stock');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toast-carrito-sin-stock';
       toast.textContent = message;
       document.body.appendChild(toast);
     }
