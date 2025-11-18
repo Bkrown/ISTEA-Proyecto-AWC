@@ -21,6 +21,30 @@ document.addEventListener("DOMContentLoaded", function() {
   const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
   // funciones ------------------------------------------------
+  async function getProductStockFromAirtable(productId) {
+  const url = `https://api.airtable.com/v0/${baseId}/${tableName}/${productId}`;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${airtableToken}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        console.error("No se pudo obtener el stock del producto");
+        return null;
+      }
+
+      const data = await response.json();
+      return data.fields.Stock ?? null;
+    } catch (error) {
+      console.error("Error consultando stock:", error);
+      return null;
+    }
+  }
+
   function createProduct(product) {
     console.log('Creando producto:', product);
     const newProduct = document.createElement('div');
@@ -48,37 +72,53 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const newButton = document.createElement('button');
     newButton.innerText = 'Agregar al carrito';
-    newButton.addEventListener('click', (event) => {
+    newButton.addEventListener('click', async (event) => {
       event.preventDefault();
 
-      // Obtener carrito actual o crear uno vacío
+      // Consultar stock real desde Airtable
+      const stockReal = await getProductStockFromAirtable(product.id);
+
+      if (stockReal === null) {
+        alert("No se pudo verificar el stock. Intente más tarde.");
+        return;
+      }
+
+      // Obtener carrito actual
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      // Ver si el producto ya está en el carrito
+      // Buscar si ya está en el carrito
       const existingProduct = cart.find(item => item.id === product.id);
 
+      const cantidadActual = existingProduct ? existingProduct.quantity : 0;
+      const cantidadNueva = cantidadActual + 1;
+
+      // Comparar con stock
+      if (cantidadNueva > stockReal) {
+        const toast = document.getElementById('toast-carrito-sin-stock');
+          toast.style.display = 'block';
+          setTimeout(() => {
+            toast.style.display = 'none';
+          }, 3000);
+        return; 
+      }
+
+      // Si hay stock agregar normalmente
       if (existingProduct) {
-        // Si ya existe, aumentar la cantidad
-        existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+        existingProduct.quantity = cantidadNueva;
       } else {
-        // Si no existe, agregarlo con cantidad = 1
         product.quantity = 1;
         cart.push(product);
       }
 
-      // Guardar carrito actualizado
-      localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
 
-      // Actualizar contador visual del carrito (si lo tenés)
-      updateCartCount();
-
-      // Mostrar el toast
-      const toast = document.getElementById('toast-carrito');
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 3000);
-    });
+    const toast = document.getElementById('toast-carrito');
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  });
 
     
     // Estructura del footer

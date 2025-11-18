@@ -842,6 +842,25 @@ border-radius: 2px;
   opacity: 0.8;
 }
 
+#toast-carrito-sin-stock {
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: rgb(128, 0, 0);
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+  display: none;  
+  gap: 20px;
+  animation: aparecer 0.5s ease-out, desaparecer 0.5s ease-in 2s forwards;
+  opacity: 0.8;
+}
+
 /* Modal de Servicios --------------------------------------------------------------------------- */
 .modal {
   display: none; 
