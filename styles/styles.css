@@ -515,7 +515,7 @@ border-radius: 2px;
 }
 
 .form-group textarea {
-  min-height: 120px;
+  min-height: 150px;
 }
 
 .btn-submit {
@@ -1194,13 +1194,13 @@ border-radius: 2px;
 
 .product-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 15px;
 }
 
 .product-form textarea {
   grid-column: 1;
-  min-height: 40px;
+  min-height: 150px;
 }
 
 .product-table {
@@ -1316,6 +1316,37 @@ border-radius: 2px;
   margin-bottom: 40px;
 }
 
+.product-form input,
+.product-form textarea,
+.product-form select {
+  width: 90%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid var(--color-link);
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.product-form input:focus,
+.product-form textarea:focus,
+.product-form select:focus {
+  border-color: var(--color-link-hover);
+  box-shadow: 0 0 4px var(--color-link);
+}
+
+.product-form select {
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"><path d="M4 6l4 4 4-4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  cursor: pointer;
+}
 /* Responsive Design  ----------------------------------------------------------------------------------------------------------------- */
 
 /* Cel */
@@ -1349,6 +1380,8 @@ border-radius: 2px;
     margin-top: 2rem;
   }
 }
+
+
 
 /* Tablet */
 @media (min-width: 769px) and (max-width: 992px) {
