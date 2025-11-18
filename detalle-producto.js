@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
     description.textContent = fields.Description || 'Sin descripción disponible';
     details.innerHTML = `
       <strong>Categoría:</strong> ${fields.Category || '-'} <br>
-      <strong>Stock:</strong> ${fields.Stock || 'No especificado'}
+      <strong>Stock:</strong> ${fields.Stock || 'Sin Stock'}
     `;
 
     
