@@ -1,10 +1,35 @@
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
-import { updateCartCount } from './funComunes.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const cartContainer = document.getElementById("cart-items");
   const summaryTotal = document.querySelector(".cart-summary span:last-child");
   const summaryCount = document.querySelector(".cart-summary span:first-child");
   const checkoutBtn = document.querySelector(".checkout-btn");
+
+  async function updateStockInAirtable(productId, nuevoStock) {
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${productId}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fields: {
+            Stock: nuevoStock
+          }
+        })
+      });
+
+      return response.ok;
+
+    } catch (error) {
+      console.error("Error actualizando stock en Airtable:", error);
+      return false;
+    }
+  }
 
   async function getStockFromAirtable(productId) {
     const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${productId}`;
@@ -58,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Renderizar productos
   let total = 0;
-  cartContainer.innerHTML = ""; // limpiar
+  cartContainer.innerHTML = ""; 
 
   carrito.forEach((producto, index) => {
     const cantidad = producto.quantity || 1;
@@ -88,8 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Actualizar resumen
   summaryCount.textContent = carrito.length;
   summaryTotal.textContent = `$${total.toLocaleString('es-AR')}`;
-
-  // === EVENTOS ===
 
  // Botones de sumar/restar
 cartContainer.addEventListener("click", async  (e) => {
@@ -122,7 +145,6 @@ cartContainer.addEventListener("click", async  (e) => {
         cantidad--;
         carrito[index].quantity = cantidad;
       } else {
-        // Si la cantidad es 1 y se hace clic en "-", eliminar producto
         carrito.splice(index, 1);
       }
     }
@@ -130,13 +152,13 @@ cartContainer.addEventListener("click", async  (e) => {
     // Guardar el carrito actualizado
     localStorage.setItem("cart", JSON.stringify(carrito));
 
-    // Si el carrito quedó vacío, recargar para mostrar mensaje
+    
     if (carrito.length === 0) {
       location.reload();
     } else {
-      // Actualizar solo la vista actual sin recargar toda la página
-      location.reload(); // si querés mantenerlo simple
-      // (si querés hacerlo sin recargar, te lo puedo dejar optimizado)
+      
+      location.reload(); 
+      
     }
   }
 });
@@ -156,7 +178,7 @@ cartContainer.addEventListener("click", async  (e) => {
 
       if (nuevaCantidad > stockReal) {
         showToastSinStock(`Stock disponible: ${stockReal}`);
-        e.target.value = stockReal; // corregir visualmente
+        e.target.value = stockReal; 
         carrito[index].quantity = stockReal;
         localStorage.setItem("cart", JSON.stringify(carrito));
         location.reload();
@@ -170,8 +192,42 @@ cartContainer.addEventListener("click", async  (e) => {
   });
 
   // Botón de finalizar compra
-  checkoutBtn.addEventListener("click", () => {
+  checkoutBtn.addEventListener("click", async () => {
+    // Obtener carrito actual
+    const carrito = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Recorrer productos y descontar stock
+    for (const producto of carrito) {
+      const productId = producto.id;
+      const cantidadComprada = producto.quantity || 1;
+
+      // Obtener stock real
+      const stockActual = await getStockFromAirtable(productId);
+
+      if (stockActual === null) {
+        alert(`Error verificando stock de ${producto.name}. Intente nuevamente.`);
+        return;
+      }
+
+      // Calcular nuevo stock
+      const nuevoStock = stockActual - cantidadComprada;
+
+      // Evitar stock negativo
+      if (nuevoStock < 0) {
+        alert(`Stock insuficiente para ${producto.name}.`);
+        return;
+      }
+
+      // Actualizar en Airtable
+      const actualizado = await updateStockInAirtable(productId, nuevoStock);
+
+      if (!actualizado) {
+        alert(`Error descontando stock de ${producto.name}.`);
+        return;
+      }
+    }
+
     localStorage.removeItem("cart");
-    location.href = "checkout.html";
+    location.href = "gracias.html";
   });
 });
