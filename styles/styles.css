@@ -671,7 +671,7 @@ border-radius: 2px;
 }
 
 .btn-carrito {
-  background-color: var(--color-footer);
+  background-color: var(--color-link);
   color: white;
 }
 
