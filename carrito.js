@@ -1,9 +1,48 @@
-
+import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
+import { updateCartCount } from './funComunes.js';
 document.addEventListener("DOMContentLoaded", () => {
   const cartContainer = document.getElementById("cart-items");
   const summaryTotal = document.querySelector(".cart-summary span:last-child");
   const summaryCount = document.querySelector(".cart-summary span:first-child");
   const checkoutBtn = document.querySelector(".checkout-btn");
+
+  async function getStockFromAirtable(productId) {
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${productId}`;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) return null;
+
+      const data = await response.json();
+      return data.fields.Stock ?? null;
+
+    } catch (error) {
+      console.error("Error obteniendo stock:", error);
+      return null;
+    }
+  }
+  function showToastSinStock(message) {
+    let toast = document.getElementById('toast-carrito-sin-stock');
+
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toast-carrito-sin-stock';
+      toast.className = 'toast-error';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+    }
+
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
 
   // Obtener carrito desde localStorage
   const carrito = JSON.parse(localStorage.getItem("cart")) || [];
@@ -53,13 +92,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // === EVENTOS ===
 
  // Botones de sumar/restar
-cartContainer.addEventListener("click", (e) => {
+cartContainer.addEventListener("click", async  (e) => {
   if (e.target.classList.contains("btn-sumar") || e.target.classList.contains("btn-restar")) {
     const index = e.target.dataset.index;
     const input = cartContainer.querySelector(`input[data-index="${index}"]`);
     let cantidad = parseInt(input.value);
 
     if (e.target.classList.contains("btn-sumar")) {
+
+      const productId = carrito[index].id;
+      const stockReal = await getStockFromAirtable(productId);
+
+      if (stockReal === null) {
+        alert("No se pudo verificar stock.");
+        return;
+      }
+
+      if (cantidad + 1 > stockReal) {
+        showToastSinStock("No hay suficiente stock disponible");
+        return;
+      }
+
       cantidad++;
       carrito[index].quantity = cantidad;
     }
@@ -89,10 +142,27 @@ cartContainer.addEventListener("click", (e) => {
 });
 
   // Cambios manuales en el input de cantidad
-  cartContainer.addEventListener("change", (e) => {
+  cartContainer.addEventListener("change", async (e) => {
     if (e.target.classList.contains("input-cantidad")) {
       const index = e.target.dataset.index;
       const nuevaCantidad = parseInt(e.target.value);
+      const productId = carrito[index].id;
+      const stockReal = await getStockFromAirtable(productId);
+
+      if (stockReal === null) {
+        alert("No se pudo verificar stock.");
+        return;
+      }
+
+      if (nuevaCantidad > stockReal) {
+        showToastSinStock(`Stock disponible: ${stockReal}`);
+        e.target.value = stockReal; // corregir visualmente
+        carrito[index].quantity = stockReal;
+        localStorage.setItem("cart", JSON.stringify(carrito));
+        location.reload();
+        return;
+      }
+
       carrito[index].quantity = nuevaCantidad;
       localStorage.setItem("cart", JSON.stringify(carrito));
       location.reload();
