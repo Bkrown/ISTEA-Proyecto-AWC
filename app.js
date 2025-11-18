@@ -45,95 +45,80 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function createProduct(product) {
-    
-    const newProduct = document.createElement('div');
-    newProduct.setAttribute('class', 'product-card');
+  const newProduct = document.createElement('div');
+  newProduct.classList.add('product-card');
 
-    const newAnchor = document.createElement('a');
-    newAnchor.setAttribute('href', './detalle-producto.html?id=' + encodeURIComponent(product.id));
-    
-    const newImg = document.createElement('img');
-    newImg.setAttribute('src', product.img);
-    newImg.setAttribute('alt', product.name);
-    
-    const newPName = document.createElement('h3');
-    newPName.setAttribute('class', 'product-name');
-    newPName.innerText = product.name;        
-        
-    const newFooterProduct = document.createElement('div');
-    newFooterProduct.setAttribute('class', 'product-footer');
+  // --- LINK (solo imagen y nombre) ---
+  const newAnchor = document.createElement('a');
+  newAnchor.href = './detalle-producto.html?id=' + encodeURIComponent(product.id);
+  newAnchor.style.textDecoration = 'none';
 
-    const newPPrice = document.createElement('p');
-    newPPrice.innerText = `$${product.price}`;   
+  const newImg = document.createElement('img');
+  newImg.src = product.img;
+  newImg.alt = product.name;
 
-    const newAddToCartLink = document.createElement('a');
-    newAddToCartLink.setAttribute('href', '#');
+  const newPName = document.createElement('h3');
+  newPName.classList.add('product-name');
+  newPName.innerText = product.name;
 
-    const newButton = document.createElement('button');
-    newButton.innerText = 'Agregar al carrito';
-    newButton.addEventListener('click', async (event) => {
-      event.preventDefault();
+  newAnchor.appendChild(newImg);
+  newAnchor.appendChild(newPName);
 
-      
-      const stockReal = await getProductStockFromAirtable(product.id);
+  // --- FOOTER (precio + botón) ---
+  const newFooter = document.createElement('div');
+  newFooter.classList.add('product-footer');
 
-      if (stockReal === null) {
-        alert("No se pudo verificar el stock. Intente más tarde.");
-        return;
-      }
+  const newPPrice = document.createElement('p');
+  newPPrice.innerText = `$${product.price}`;
 
-      
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const newButton = document.createElement('button');
+  newButton.innerText = 'Agregar al carrito';
 
-     
-      const existingProduct = cart.find(item => item.id === product.id);
+  // Evento botón
+  newButton.addEventListener('click', async (event) => {
+    event.preventDefault();
 
-      const cantidadActual = existingProduct ? existingProduct.quantity : 0;
-      const cantidadNueva = cantidadActual + 1;
+    const stockReal = await getProductStockFromAirtable(product.id);
+    if (stockReal === null) {
+      alert("No se pudo verificar el stock.");
+      return;
+    }
 
-      
-      if (cantidadNueva > stockReal) {
-        const toast = document.getElementById('toast-carrito-sin-stock');
-          toast.style.display = 'block';
-          setTimeout(() => {
-            toast.style.display = 'none';
-          }, 3000);
-        return; 
-      }
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingProduct = cart.find(item => item.id === product.id);
+    const cantidadActual = existingProduct ? existingProduct.quantity : 0;
 
-      
-      if (existingProduct) {
-        existingProduct.quantity = cantidadNueva;
-      } else {
-        product.quantity = 1;
-        cart.push(product);
-      }
+    if (cantidadActual + 1 > stockReal) {
+      const toast = document.getElementById('toast-carrito-sin-stock');
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 3000);
+      return;
+    }
+
+    if (existingProduct) {
+      existingProduct.quantity++;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
 
     localStorage.setItem('cart', JSON.stringify(cart));
+
     updateCartCount();
 
     const toast = document.getElementById('toast-carrito');
     toast.style.display = 'block';
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 3000);
+    setTimeout(() => toast.style.display = 'none', 3000);
   });
 
-    
-    // Estructura del footer
-    newAddToCartLink.appendChild(newButton);
-    newFooterProduct.appendChild(newPPrice);
-    newFooterProduct.appendChild(newAddToCartLink);
+  newFooter.appendChild(newPPrice);
+  newFooter.appendChild(newButton);
 
-    // Estructura del producto
-    newAnchor.appendChild(newImg);
-    newAnchor.appendChild(newPName);
-    newAnchor.appendChild(newFooterProduct);
+  // --- ARMADO FINAL ---
+  newProduct.appendChild(newAnchor);
+  newProduct.appendChild(newFooter);
 
-    newProduct.appendChild(newAnchor);
-    return newProduct;
-
-  }
+  return newProduct;
+}
 
   function filterProducts(text) {
     // Filtro de productos

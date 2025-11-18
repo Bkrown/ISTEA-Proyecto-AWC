@@ -268,7 +268,7 @@ a:hover {
       text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
-      gap: 20px;
+      gap: 10px;
       flex-direction: column;
       a{
         text-decoration: none;
@@ -316,7 +316,6 @@ a:hover {
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.2s ease;
-      margin-top: auto;
       font-size: 16px;
     }
 
