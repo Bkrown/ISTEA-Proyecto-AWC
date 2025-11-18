@@ -1,14 +1,14 @@
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
 
-// ===== CONFIGURACIÓN DE AIRTABLE =====
-  const airtableToken = AIRTABLE_TOKEN;//Borrado para pushear a GitHub
+
+  const airtableToken = AIRTABLE_TOKEN;
   const baseId = BASE_ID;
   const tableName = TABLE_NAME;
   const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
   
 
 
-// ===== FUNCIÓN PARA OBTENER PRODUCTOS =====
+
 async function getProductsFromAirtable() {
   try {
     const response = await fetch(airtableUrl, {
@@ -25,7 +25,7 @@ async function getProductsFromAirtable() {
   }
 }
 
-// ===== FUNCIÓN PARA RENDERIZAR =====
+
 function renderProducts(products) {
   const tbody = document.getElementById("product-list");
   tbody.innerHTML = "";
@@ -47,7 +47,7 @@ function renderProducts(products) {
   });
 }
 
-// ===== CREAR / ACTUALIZAR PRODUCTO =====
+
 async function saveProduct(e) {
   e.preventDefault();
 
@@ -84,7 +84,7 @@ async function saveProduct(e) {
   }
 }
 
-// ===== ELIMINAR PRODUCTO =====
+
 async function deleteProduct(id) {
   if (!confirm("¿Seguro que querés eliminar este producto?")) return;
   try {
@@ -100,7 +100,7 @@ async function deleteProduct(id) {
   }
 }
 
-// ===== CARGAR DATOS EN FORMULARIO PARA EDITAR =====
+
 document.getElementById("product-list").addEventListener("click", (e) => {
   if (e.target.classList.contains("edit")) {
     const id = e.target.dataset.id;
@@ -112,7 +112,6 @@ document.getElementById("product-list").addEventListener("click", (e) => {
 });
 
 
-  // ===== MODAL =====
 const modal = document.getElementById("modal");
 const btnOpen = document.getElementById("btn-open-modal");
 const spanClose = document.querySelector(".close");
@@ -133,7 +132,6 @@ window.addEventListener("click", (e) => {
   if (e.target === modal) modal.style.display = "none";
 });
 
-// Modificá la función editProduct para abrir el modal
 async function editProduct(id) {
   try {
     const response = await fetch(`${airtableUrl}/${id}`, {
@@ -158,8 +156,6 @@ async function editProduct(id) {
 
 
 
-// ===== EVENTOS =====
 document.getElementById("product-form").addEventListener("submit", saveProduct);
 
-// ===== CARGA INICIAL =====
 getProductsFromAirtable();

@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function renderProduct(fields, productId) {
-    // Obtener elementos del DOM
+    
     const img = document.querySelector('.product-image');
     const name = document.querySelector('.product-name');
     const price = document.querySelector('.product-price');
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const details = document.querySelector('.product-details');
     const btnCarrito = document.querySelector('.btn-carrito');
 
-    // Asignar valores
+    
     img.src = fields.Img || 'img/no-image.png';
     img.alt = fields.Name || 'Producto sin nombre';
     name.textContent = fields.Name || 'Sin nombre';
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <strong>Stock:</strong> ${fields.Stock || 'No especificado'}
     `;
 
-    // Crear objeto de producto para el carrito
+    
     const product = {
       id: productId,
       name: fields.Name,
@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function() {
       description: fields.Description
     };
 
-    // Evento: Agregar al carrito
+    
     btnCarrito.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      // Obtener stock real desde Airtable
+      
       const stockReal = await getStockFromAirtable(product.id);
 
       if (stockReal === null) {
@@ -91,22 +91,22 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
       }
 
-      // Obtener carrito actual
+      
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      // Buscar si ya está en el carrito
+      
       const existingProduct = cart.find(item => item.id === product.id);
 
       const cantidadActual = existingProduct ? existingProduct.quantity : 0;
       const cantidadNueva = cantidadActual + 1;
 
-      // Comparar con stock
+      
       if (cantidadNueva > stockReal) {
         showToastSinStock("No hay suficiente Stock")
         return; 
       }
 
-      // Agregar normalmente
+      
       if (existingProduct) {
         existingProduct.quantity = cantidadNueva;
       } else {
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // === Función para mostrar el toast ===
+  
   function showToast(message) {
     let toast = document.getElementById('toast-carrito');
     if (!toast) {
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 3000);
   }
 
-  // === Función para actualizar contador ===
+  
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // === Ejecución inicial ===
+  
   const productId = getProductIdFromUrl();
   if (productId) {
     fetchProductById(productId);

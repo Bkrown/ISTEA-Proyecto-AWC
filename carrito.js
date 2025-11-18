@@ -69,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
-  // Obtener carrito desde localStorage
+  
   const carrito = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Si el carrito está vacío
+  
   if (carrito.length === 0) {
     cartContainer.innerHTML = "<p>Tu carrito está vacío</p>";
     summaryCount.textContent = "0";
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Renderizar productos
+  
   let total = 0;
   cartContainer.innerHTML = ""; 
 
@@ -110,11 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
     cartContainer.appendChild(item);
   });
 
-  // Actualizar resumen
+  
   summaryCount.textContent = carrito.length;
   summaryTotal.textContent = `$${total.toLocaleString('es-AR')}`;
 
- // Botones de sumar/restar
+ 
 cartContainer.addEventListener("click", async  (e) => {
   if (e.target.classList.contains("btn-sumar") || e.target.classList.contains("btn-restar")) {
     const index = e.target.dataset.index;
@@ -149,7 +149,7 @@ cartContainer.addEventListener("click", async  (e) => {
       }
     }
 
-    // Guardar el carrito actualizado
+    
     localStorage.setItem("cart", JSON.stringify(carrito));
 
     
@@ -163,7 +163,7 @@ cartContainer.addEventListener("click", async  (e) => {
   }
 });
 
-  // Cambios manuales en el input de cantidad
+  
   cartContainer.addEventListener("change", async (e) => {
     if (e.target.classList.contains("input-cantidad")) {
       const index = e.target.dataset.index;
@@ -191,17 +191,17 @@ cartContainer.addEventListener("click", async  (e) => {
     }
   });
 
-  // Botón de finalizar compra
+  
   checkoutBtn.addEventListener("click", async () => {
-    // Obtener carrito actual
+    
     const carrito = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Recorrer productos y descontar stock
+    
     for (const producto of carrito) {
       const productId = producto.id;
       const cantidadComprada = producto.quantity || 1;
 
-      // Obtener stock real
+      
       const stockActual = await getStockFromAirtable(productId);
 
       if (stockActual === null) {
@@ -209,16 +209,16 @@ cartContainer.addEventListener("click", async  (e) => {
         return;
       }
 
-      // Calcular nuevo stock
+      
       const nuevoStock = stockActual - cantidadComprada;
 
-      // Evitar stock negativo
+      
       if (nuevoStock < 0) {
         alert(`Stock insuficiente para ${producto.name}.`);
         return;
       }
 
-      // Actualizar en Airtable
+      
       const actualizado = await updateStockInAirtable(productId, nuevoStock);
 
       if (!actualizado) {

@@ -1,6 +1,5 @@
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
 import { updateCartCount } from './funComunes.js';
-//import { ICON_CHECH } from './icons.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
     newButton.addEventListener('click', async (event) => {
       event.preventDefault();
 
-      // Consultar stock real desde Airtable
+      
       const stockReal = await getProductStockFromAirtable(product.id);
 
       if (stockReal === null) {
@@ -83,16 +82,16 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
       }
 
-      // Obtener carrito actual
+      
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      // Buscar si ya está en el carrito
+     
       const existingProduct = cart.find(item => item.id === product.id);
 
       const cantidadActual = existingProduct ? existingProduct.quantity : 0;
       const cantidadNueva = cantidadActual + 1;
 
-      // Comparar con stock
+      
       if (cantidadNueva > stockReal) {
         const toast = document.getElementById('toast-carrito-sin-stock');
           toast.style.display = 'block';
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return; 
       }
 
-      // Si hay stock agregar normalmente
+      
       if (existingProduct) {
         existingProduct.quantity = cantidadNueva;
       } else {
@@ -201,14 +200,14 @@ categoryCheckboxes.forEach(checkbox => {
 
       let filtered = listProducts;
 
-      // Filtrar por categoría si hay seleccionadas
+      
       if (selectedCategories.length > 0) {
         filtered = filtered.filter(p =>
           selectedCategories.includes(p.category?.toLowerCase())
         );
       }
 
-      // Filtrar por texto
+      
       if (text.trim() !== "") {
         filtered = filtered.filter(p =>
           p.name.toLowerCase().includes(text)
