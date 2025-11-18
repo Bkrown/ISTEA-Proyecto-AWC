@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // detectar selección de filtros
   document.querySelectorAll('.category-checkbox').forEach(checkbox => {
-  checkbox.addEventListener('change', () => {
+    checkbox.addEventListener('change', () => {
     const seleccionadas = Array.from(document.querySelectorAll('.category-checkbox:checked'))
                                .map(cb => cb.value);
        
@@ -180,15 +180,11 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   
-const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+  const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
 
-categoryCheckboxes.forEach(checkbox => {
-  checkbox.addEventListener('change', () => {
-    checkbox.addEventListener('change', () => {
-    applyFilters();
+  categoryCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', applyFilters);
   });
-  });
-});
     function applyFilters() {
 
       const text = inputSearch.value.toLowerCase();
